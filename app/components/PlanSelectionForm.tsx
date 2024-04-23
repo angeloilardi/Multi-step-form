@@ -5,13 +5,14 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { Switch } from "@nextui-org/switch";
 import { cn } from "@nextui-org/system";
+import Image from "next/image";
 
 const options = [
   {
     value: "arcade",
     label: "Arcade",
     icon: "/images/icon-arcade.svg",
-    monthly: "9",
+    monthly: 9,
     yearly: 90,
   },
   {
@@ -30,36 +31,39 @@ const options = [
   },
 ];
 
+interface PropsType {
+  [x: string]: any;
+  label: string;
+  name: string;
+  icon: string;
+  price: number;
+  isSelected: boolean;
+}
+
 
 export default function PlanSelectionForm() {
   const [toggle, setToggle] = useState(false);
 
-  const RadioInput = ({ label, icon, price, isSelected, ...props }) => {
+  const RadioInput = ({ label, icon, price, isSelected, ...props }:PropsType) => {
     const [field] = useField(props);
     return (
       <>
-        <div
-          className={`border-3 border-${
-            !isSelected ? `orange-700` : `marine-blue`
-          } rounded-md p-4 flex items-center`}
+        <label
+          className={`border-1 ${
+            !isSelected ? `border-light-gray` : `border-purplish-blue`
+          } rounded-md p-4 flex items-center text-marine-blue font-[500]`}
         >
-          <img src={icon} alt="" className="mr-4" />
+          <Image src={icon} alt="" className="mr-4" width={ 40} height={ 40} />
           <input type="radio" {...field} {...props} hidden className="" />
           <div className="flex flex-col">
-            <label
-              htmlFor={props.id || props.name}
-              className=" text-marine-blue font-[500]"
-            >
               {label}
-              <br />
-            </label>
             <span className="text-light-gray">
               ${price}
               {!toggle ? `/mo` : `/yr`}
             </span>
-            {toggle && <span>2 months free</span>}
+            {toggle && <span className="font-normal">2 months free</span>}
           </div>
-        </div>
+        </label>
       </>
     );
   };

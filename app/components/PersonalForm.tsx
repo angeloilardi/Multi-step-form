@@ -3,7 +3,13 @@ import * as Yup from "yup";
 
 const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
-const TextInput = ({ label, ...props }) => {
+type InputProps = {
+  label: string;
+  name: string;
+  [x: string]: any;
+};
+
+const TextInput = ({ label, ...props }:InputProps) => {
   const [field, meta] = useField(props);
   return (
     <>
