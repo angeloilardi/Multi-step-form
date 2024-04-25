@@ -60,18 +60,9 @@ const CheckboxInput = ({
   );
 };
 
-export default function AddonsForm() {
+export default function AddonsForm(values) {
   return (
     <>
-      <Formik
-        initialValues={{ checked: [] }}
-        onSubmit={async (values, { setSubmitting }) => {
-          await new Promise((r) => setTimeout(r, 500));
-          setSubmitting(false);
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form>
             <div className="flex flex-col gap-3">
               {options.map(({ label, value, description, monthly, yearly }) => {
                 return (
@@ -87,9 +78,6 @@ export default function AddonsForm() {
                 );
               })}
             </div>
-          </Form>
-        )}
-      </Formik>
     </>
   );
 }

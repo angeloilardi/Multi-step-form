@@ -1,12 +1,10 @@
 "use client";
 
-import { Formik, Form, useField, withFormik } from "formik";
+import { useField, } from "formik";
 import { useState } from "react";
-import * as Yup from "yup";
 import { Switch } from "@nextui-org/switch";
 import { cn } from "@nextui-org/system";
 import Image from "next/image";
-import BottomBar from "./BottomBar";
 
 const options = [
   {
@@ -41,7 +39,7 @@ interface PropsType {
   isSelected: boolean;
 }
 
-export default function PlanSelectionForm() {
+export default function PlanSelectionForm(values, handleChange) {
   const [toggle, setToggle] = useState(false);
 
   const RadioInput = ({
@@ -76,22 +74,6 @@ export default function PlanSelectionForm() {
 
   return (
     <>
-      <Formik
-        initialValues={{
-          name: "",
-          email: "",
-          phoneNumber: "",
-          plan: "arcade",
-          toggle: false,
-          checked: []
-        }}
-        onSubmit={async (values, { setSubmitting }) => {
-          await new Promise((r) => setTimeout(r, 500));
-          setSubmitting(false);
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form>
             <fieldset>
               <legend className="sr-only">Select a plan</legend>
               <div className="flex flex-col gap-3">
@@ -154,9 +136,7 @@ export default function PlanSelectionForm() {
                 Yearly
               </label>
             </div>
-          </Form>
-        )}
-      </Formik>
+
     </>
   );
 }

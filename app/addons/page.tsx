@@ -1,6 +1,5 @@
-import AddonsForm from "../components/AddonsForm";
+import AddonsForm from "../components/Forms/AddonsForm";
 import Card from "../components/Card";
-
 
 export default function Addons() {
   return (
