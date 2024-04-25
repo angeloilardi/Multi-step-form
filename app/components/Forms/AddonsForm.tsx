@@ -1,6 +1,6 @@
 "use client";
 
-import { Formik, Form, useField } from "formik";
+import { Formik, Form, useField, useFormikContext } from "formik";
 import Image from "next/image";
 
 type InputProps = {
@@ -19,7 +19,7 @@ const options = [
     yearly: 10,
   },
   {
-    value: "arcade",
+    value: "storage",
     label: "Larger storage",
     description: "Extra 1TB of cloud save",
     monthly: 2,
@@ -52,15 +52,16 @@ const CheckboxInput = ({
         <input type="checkbox" {...field} {...props} className="w-4 h-4 mr-4" />
         <div className="flex flex-col">
           {label}
-          <span className="text-light-gray">${description}</span>
+          <span className="text-light-gray font-normal">{description}</span>
         </div>
-        <div className="ml-auto">+{price}</div>
+        <div className="ml-auto text-purplish-blue font-normal">+{price}</div>
       </label>
     </>
   );
 };
 
-export default function AddonsForm(values) {
+export default function AddonsForm() {
+  const { values }  = useFormikContext();
   return (
     <>
             <div className="flex flex-col gap-3">
@@ -73,7 +74,7 @@ export default function AddonsForm(values) {
                     key={value}
                     description={description}
                     isChecked={values.checked.includes(value)}
-                    price={monthly}
+                    price={values.toggle ? `${yearly}/yr` : `${monthly}/mo`}
                   />
                 );
               })}

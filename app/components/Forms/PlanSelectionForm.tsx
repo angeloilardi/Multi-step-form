@@ -1,6 +1,6 @@
 "use client";
 
-import { useField, } from "formik";
+import { useField, useFormikContext, } from "formik";
 import { useState } from "react";
 import { Switch } from "@nextui-org/switch";
 import { cn } from "@nextui-org/system";
@@ -39,7 +39,10 @@ interface PropsType {
   isSelected: boolean;
 }
 
-export default function PlanSelectionForm(values, handleChange) {
+export default function PlanSelectionForm() {
+  
+  const { values, handleChange } = useFormikContext();
+  
   const [toggle, setToggle] = useState(false);
 
   const RadioInput = ({

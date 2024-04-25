@@ -1,13 +1,14 @@
 import { useState } from "react";
 import TopBar from "./TopBar";
 import Card from "./Card";
-import Recap from './Recap'
+import Recap from "./Recap";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import PersonalForm from "./Forms/PersonalForm";
 import BottomBar from "./BottomBar";
 import PlanSelectionForm from "./Forms/PlanSelectionForm";
 import AddonsForm from "./Forms/AddonsForm";
+import plans from './../utils/data'
 
 const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
@@ -50,6 +51,9 @@ function renderForm(step: number) {
 }
 
 export default function SignupForm() {
+  const handleBack = () => {
+    setCurrentStep(currentStep - 1);
+  }
   const handleSubmit = () => {
     setCurrentStep(currentStep + 1);
   };
@@ -83,19 +87,22 @@ export default function SignupForm() {
           })}
           onSubmit={async (values, { setSubmitting }) => {
             await new Promise((r) => setTimeout(r, 500));
-              setSubmitting(false);
-              console.log(values.checked);
+            setSubmitting(false);
           }}
-              >
-                  {({ values, handleChange }) => (
-                      <><Form className="flex flex-col">
-                          {renderForm(currentStep)}
-                      </Form>
-                          <div>{values.checked}</div></>
-                  )}
+        >
+          {({ values, handleChange }) => (
+            <>
+              <Form className="flex flex-col">{renderForm(currentStep)}</Form>
+            </>
+          )}
         </Formik>
       </Card>
-      <BottomBar handleSubmit={handleSubmit}></BottomBar>
+      <BottomBar
+        handleSubmit={handleSubmit}
+        handleBack={handleBack}
+        currentStep={currentStep}
+        isFinalStep={isFinalStep}
+      ></BottomBar>
     </>
   );
 }
