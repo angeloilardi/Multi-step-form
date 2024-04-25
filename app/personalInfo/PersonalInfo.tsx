@@ -1,22 +1,18 @@
 "use client";
-
 import Card from "../components/Card";
 import PersonalForm from "../components/PersonalForm";
-
-interface Values {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
+import TopBar from "../components/TopBar";
 
 
 export default function PersonalInfoForm() {
   return (
-    <Card
+    <>
+      <TopBar />
+      <Card
       title="Personal info"
       description="Please provide your name, email address, and phone number."
     >
       <PersonalForm />
-    </Card>
+    </Card></>
   );
 }

@@ -4,6 +4,7 @@ import "./globals.css";
 import Image from "next/image";
 import Footer from "./components/Footer";
 import { Providers } from "./providers";
+import BottomBar from "./components/BottomBar";
 
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -20,12 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`pt-24 bg-magnolia h-screen ${ubuntu.className} bg-[url('/images/bg-sidebar-mobile.svg')] bg-contain bg-no-repeat bg-top`}
+        className={` bg-magnolia ${ubuntu.className} bg-[url('/images/bg-sidebar-mobile.svg')] bg-contain bg-no-repeat bg-top min-h-screen flex flex-col`}
       >
-        <Providers>
-          {children}
-          <Footer />
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
