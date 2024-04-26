@@ -31,7 +31,6 @@ export default function Recap({
       return isYearly ? addons[value].yearly : addons[value].monthly;
     }
   });
-  console.log(checked);
 
   return (
     <>

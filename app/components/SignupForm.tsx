@@ -9,6 +9,7 @@ import BottomBar from "./BottomBar";
 import PlanSelectionForm from "./Forms/PlanSelectionForm";
 import AddonsForm from "./Forms/AddonsForm";
 import plans from './../utils/data'
+import OrderSuccess from "./OrderSuccess";
 
 const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
@@ -70,47 +71,48 @@ export default function SignupForm() {
   return (
     <>
       <TopBar currentStep={currentStep} />
-      <Card
-        title={steps[currentStep].name}
-        description={steps[currentStep].description}
-      >
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            phoneNumber: "",
-            plan: "arcade",
-            toggle: false,
-            checked: [],
-          }}
-          validationSchema={Yup.object({
-            name: Yup.string().required("This field is required"),
-            email: Yup.string()
-              .email("Invalid email addresss")
-              .required("This field is required"),
-            phoneNumber: Yup.string()
-              .required("This field is required")
-              .matches(phoneRegEx, "Phone number not valid"),
-          })}
-          onSubmit={async (values, { setSubmitting }) => {
-            await new Promise((r) => setTimeout(r, 500));
-            setSubmitting(false);
-          }}
+      {currentStep === steps.length ? (<OrderSuccess />) : 
+      <><Card
+          title={steps[currentStep].name}
+          description={steps[currentStep].description}
         >
-          {({ values, handleChange }) => (
-            <>
-              <Form className="flex flex-col">
-                {renderForm(currentStep)}</Form>
-            </>
-          )}
-        </Formik>
-      </Card>
-      <BottomBar
-        handleSubmit={handleSubmit}
-        handleBack={handleBack}
-        currentStep={currentStep}
-        isFinalStep={isFinalStep}
-      ></BottomBar>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              phoneNumber: "",
+              plan: "arcade",
+              toggle: false,
+              checked: [],
+            }}
+            validationSchema={Yup.object({
+              name: Yup.string().required("This field is required"),
+              email: Yup.string()
+                .email("Invalid email addresss")
+                .required("This field is required"),
+              phoneNumber: Yup.string()
+                .required("This field is required")
+                .matches(phoneRegEx, "Phone number not valid"),
+            })}
+            onSubmit={async (_values, { setSubmitting }) => {
+              await new Promise((r) => setTimeout(r, 500));
+              setSubmitting(false);
+            } }
+          >
+            {({ values, handleChange }) => (
+              <>
+                <Form className="flex flex-col">
+                  {renderForm(currentStep)}</Form>
+              </>
+            )}
+          </Formik>
+        </Card><BottomBar
+          handleSubmit={handleSubmit}
+          handleBack={handleBack}
+          currentStep={currentStep}
+          isFinalStep={isFinalStep}
+        ></BottomBar></>
+      }
     </>
   );
 }
