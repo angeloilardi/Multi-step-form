@@ -23,7 +23,6 @@ const steps = [
 
 
 export default function TopBar(props: {currentStep:number}) {
-    console.log(props);
     return <div className="bg-transparent flex gap-4 justify-center items-center py-8">
         {
             steps.map(step => {
@@ -36,7 +35,6 @@ export default function TopBar(props: {currentStep:number}) {
                     >
                         {step.order}
                     </div>
-                        {/* <p>{currentStep}</p> */}
                     </>
                 );
             })

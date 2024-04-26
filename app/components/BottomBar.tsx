@@ -1,6 +1,14 @@
 'use client'
 
-export default function SubmitButton({ currentStep, handleSubmit, handleBack, isFinalStep }) {
+interface Props {
+  currentStep: number;
+  handleSubmit: () => void;
+  handleBack: () => void;
+  isFinalStep: boolean;
+}
+
+export default function SubmitButton(props: Props){
+const { currentStep, handleSubmit, handleBack, isFinalStep } = props;
   return (
     <>
       <div className="w-full flex items-center justify-between mt-auto bg-white px-[4%] py-4">

@@ -54,18 +54,25 @@ const CheckboxInput = ({
           {label}
           <span className="text-light-gray font-normal">{description}</span>
         </div>
-        <div className="ml-auto text-purplish-blue font-normal">+{price}</div>
+        <div className="ml-auto text-purplish-blue font-normal">+${price}</div>
       </label>
     </>
   );
 };
 
+type FormValues = {
+  plan: string;
+  toggle: boolean;
+  checked: [];
+};
+
 export default function AddonsForm() {
-  const { values }  = useFormikContext();
+  const { values } = useFormikContext<FormValues>();
+  const {checked}:{checked:string[]} = values
   return (
     <>
             <div className="flex flex-col gap-3">
-              {options.map(({ label, value, description, monthly, yearly }) => {
+              {options.map(({ label, value, description, monthly, yearly }:{label:string, value: string, description:string, monthly: number, yearly: number }) => {
                 return (
                   <CheckboxInput
                     label={label}
@@ -73,8 +80,9 @@ export default function AddonsForm() {
                     name="checked"
                     key={value}
                     description={description}
-                    isChecked={values.checked.includes(value)}
+                    isChecked={checked.includes(value)}
                     price={values.toggle ? `${yearly}/yr` : `${monthly}/mo`}
+                    checked={checked.includes(value)?true:false}
                   />
                 );
               })}

@@ -1,22 +1,37 @@
 import { useFormikContext } from "formik";
 
 import data from "./../utils/data";
+import { MouseEventHandler } from "react";
 
-export default function Recap() {
-  const { values } = useFormikContext();
-  const isYearly = values.toggle;
-  const planPrice = isYearly
-    ? data.plans[values.plan].yearly
-    : data.plans[values.plan].monthly;
+type FormValues = {
+    plan: string,
+    toggle: boolean,
+    checked: []
+}
 
-    const addonsPrice = values.checked.map(value => {
-    {
-      return isYearly
-        ? data.addons[value].yearly
-        : data.addons[value].monthly
-    }
+const {plans, addons} = data
+
+
+
+export default function Recap({
+  handleChangePlan,
+}: {
+  handleChangePlan: MouseEventHandler<HTMLButtonElement>;
     })
-    console.log(addonsPrice);
+{
+    const { values } = useFormikContext<FormValues>();
+    const { plan, toggle, checked } = values;
+  const isYearly = toggle;
+  const planPrice:number = isYearly
+    ? plans[plan].yearly
+    : plans[plan].monthly;
+
+  const addonsPrice = checked.map((value) => {
+    {
+      return isYearly ? addons[value].yearly : addons[value].monthly;
+    }
+  });
+  console.log(checked);
 
   return (
     <>
@@ -24,24 +39,29 @@ export default function Recap() {
         <div className="flex">
           <div className="flex flex-col items-start">
             <p className="capitalize text-marine-blue">
-              {values.plan} {isYearly ? `(Yearly)` : `(Monthly)`}
+              {plan} {isYearly ? `(Yearly)` : `(Monthly)`}
             </p>
-            <button className="underline text-cool-gray">Change</button>
+            <button
+              className="underline text-cool-gray"
+              onClick={handleChangePlan}
+            >
+              Change
+            </button>
           </div>
           <p className="text-marine-blue font-[500] ml-auto mt-4">
             {`$${planPrice}/${isYearly ? "yr" : "mo"}`}
           </p>
         </div>
-        {values.checked.map((value) => {
+        {checked.map((value:any) => {
           return (
             <>
               <hr className="my-4" />
               <div className="flex justify-between">
-                <p className="text-cool-gray">{data.addons[value].label}</p>
+                <p className="text-cool-gray">{addons[value].label}</p>
                 <p>
                   {isYearly
-                    ? `+$${data.addons[value].yearly}/yr`
-                    : `+$${data.addons[value].monthly}/mo`}
+                    ? `+$${addons[value].yearly}/yr`
+                    : `+$${addons[value].monthly}/mo`}
                 </p>
               </div>
             </>
@@ -52,7 +72,9 @@ export default function Recap() {
         <p className="text-cool-gray">{`Total (per ${
           isYearly ? "year" : "month"
         })`}</p>
-              <p className="text-purplish-blue font-[500]">{`+$${planPrice + addonsPrice.reduce((a, b) => a + b)}/${isYearly ? 'yr' : 'mo'}`}</p>
+        <p className="text-purplish-blue font-[500]">{`+$${
+          planPrice + addonsPrice.reduce((a, b) => a + b)
+        }/${isYearly ? "yr" : "mo"}`}</p>
       </div>
     </>
   );

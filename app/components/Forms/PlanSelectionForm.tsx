@@ -39,9 +39,13 @@ interface PropsType {
   isSelected: boolean;
 }
 
+type FormValues = {
+  plan:string
+}
+
 export default function PlanSelectionForm() {
   
-  const { values, handleChange } = useFormikContext();
+  const { values, handleChange } = useFormikContext<FormValues>();
   
   const [toggle, setToggle] = useState(false);
 

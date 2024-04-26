@@ -35,22 +35,25 @@ const steps = [
   },
 ];
 
-function renderForm(step: number) {
-  switch (step) {
-    case 0:
-      return <PersonalForm />;
-    case 1:
-      return <PlanSelectionForm />;
-    case 2:
-      return <AddonsForm />;
-    case 3:
-      return <Recap />;
-    default:
-      break;
-  }
-}
+
 
 export default function SignupForm() {
+
+  function renderForm(step: number) {
+    switch (step) {
+      case 0:
+        return <PersonalForm />;
+      case 1:
+        return <PlanSelectionForm />;
+      case 2:
+        return <AddonsForm />;
+      case 3:
+        return <Recap handleChangePlan={handleChangePlan} />;
+      default:
+        break;
+    }
+  } 
+
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
   }
@@ -58,6 +61,10 @@ export default function SignupForm() {
     setCurrentStep(currentStep + 1);
   };
 
+  const handleChangePlan = () => {
+    setCurrentStep(1);
+  };
+ 
   const [currentStep, setCurrentStep] = useState(0);
   const isFinalStep = currentStep === steps.length - 1;
   return (
@@ -92,7 +99,8 @@ export default function SignupForm() {
         >
           {({ values, handleChange }) => (
             <>
-              <Form className="flex flex-col">{renderForm(currentStep)}</Form>
+              <Form className="flex flex-col">
+                {renderForm(currentStep)}</Form>
             </>
           )}
         </Formik>
