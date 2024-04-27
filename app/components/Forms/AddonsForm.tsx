@@ -49,7 +49,7 @@ const CheckboxInput = ({
           isChecked ? `border-purplish-blue bg-alabaster` : `border-light-gray`
         } rounded-md p-4 flex items-center text-marine-blue font-[500]`}
       >
-        <input type="checkbox" {...field} {...props} className="w-4 h-4 mr-4" />
+        <input type="checkbox" {...field} {...props} className="w-4 h-4 mr-4 lg:mr-5" />
         <div className="flex flex-col">
           {label}
           <span className="text-light-gray font-normal">{description}</span>

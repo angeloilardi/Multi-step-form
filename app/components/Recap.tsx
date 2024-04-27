@@ -71,7 +71,7 @@ export default function Recap({
         <p className="text-cool-gray">{`Total (per ${
           isYearly ? "year" : "month"
         })`}</p>
-        <p className="text-purplish-blue font-[500]">{`+$${
+        <p className="text-purplish-blue font-[500] text-xl">{`+$${
           planPrice + addonsPrice.reduce((a, b) => a + b)
         }/${isYearly ? "yr" : "mo"}`}</p>
       </div>
