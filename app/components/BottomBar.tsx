@@ -2,13 +2,13 @@
 
 interface Props {
   currentStep: number;
-  handleSubmit: () => void;
   handleBack: () => void;
+  handleSubmit: () => void;
   isFinalStep: boolean;
 }
 
 export default function SubmitButton(props: Props){
-const { currentStep, handleSubmit, handleBack, isFinalStep } = props;
+const { currentStep, handleBack, isFinalStep, handleSubmit } = props;
   return (
     <>
       <div className="w-full flex items-center justify-between mt-auto bg-white px-[4%] py-4">

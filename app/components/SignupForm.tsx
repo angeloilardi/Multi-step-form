@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Card from "./Card";
 import Recap from "./Recap";
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 import PersonalForm from "./Forms/PersonalForm";
 import BottomBar from "./BottomBar";
@@ -10,6 +10,9 @@ import PlanSelectionForm from "./Forms/PlanSelectionForm";
 import AddonsForm from "./Forms/AddonsForm";
 import plans from './../utils/data'
 import OrderSuccess from "./OrderSuccess";
+// import {
+//   useWindowWidth
+// } from "@react-hook/window-size";
 
 const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
@@ -58,61 +61,92 @@ export default function SignupForm() {
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
   }
-  const handleSubmit = () => {
+  const goNext = () => {
     setCurrentStep(currentStep + 1);
   };
 
   const handleChangePlan = () => {
     setCurrentStep(1);
   };
+
+  const handleSubmit = (values, actions) => {
+    if (isFinalStep) {
+    setCurrentStep(currentStep + 1);
+    console.log("what is going on");
+    console.log(values);
+ } else setCurrentStep(currentStep + 1);
+   
+  }
  
   const [currentStep, setCurrentStep] = useState(0);
   const isFinalStep = currentStep === steps.length - 1;
+const formik = useRef(null)
+
+
+
   return (
     <>
       <TopBar currentStep={currentStep} />
-      {currentStep === steps.length ? (<OrderSuccess />) : 
-      <><Card
-          title={steps[currentStep].name}
-          description={steps[currentStep].description}
-        >
-          <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              phoneNumber: "",
-              plan: "arcade",
-              toggle: false,
-              checked: [],
-            }}
-            validationSchema={Yup.object({
-              name: Yup.string().required("This field is required"),
-              email: Yup.string()
-                .email("Invalid email addresss")
-                .required("This field is required"),
-              phoneNumber: Yup.string()
-                .required("This field is required")
-                .matches(phoneRegEx, "Phone number not valid"),
-            })}
-            onSubmit={async (_values, { setSubmitting }) => {
-              await new Promise((r) => setTimeout(r, 500));
-              setSubmitting(false);
-            } }
+
+      {currentStep === steps.length ? (
+        <OrderSuccess />
+      ) : (
+        <>
+            <Card
+              currentStep={currentStep}
+            title={steps[currentStep].name}
+            description={steps[currentStep].description}
           >
-            {({ values, handleChange }) => (
-              <>
+            <Formik
+              innerRef={formik}
+              initialValues={{
+                name: "",
+                email: "",
+                phoneNumber: "",
+                plan: "arcade",
+                toggle: false,
+                checked: [],
+              }}
+              // validationSchema={Yup.object({
+              //   name: Yup.string().required("This field is required"),
+              //   email: Yup.string()
+              //     .email("Invalid email addresss")
+              //     .required("This field is required"),
+              //   phoneNumber: Yup.string()
+              //     .required("This field is required"),
+              //   plan: Yup.string(),
+              //   toggle: Yup.boolean(),
+              //   checked: Yup.array(),
+              // })}
+              // onSubmit={async (values) => {
+              //   await new Promise((r) => setTimeout(r, 500));
+              //   alert(JSON.stringify(values, null, 2));
+              // }}
+              onSubmit={handleSubmit}
+            >
+              {({ values, handleChange, isSubmitting }) => (
                 <Form className="flex flex-col">
-                  {renderForm(currentStep)}</Form>
-              </>
-            )}
-          </Formik>
-        </Card><BottomBar
-          handleSubmit={handleSubmit}
-          handleBack={handleBack}
-          currentStep={currentStep}
-          isFinalStep={isFinalStep}
-        ></BottomBar></>
-      }
+                  {renderForm(currentStep)}
+                  {/* <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-6 h-4 bg-zinc-50 p-6"
+                  >
+                    sub
+                  </button> */}
+                </Form>
+              )}
+            </Formik>
+          </Card>
+          <BottomBar
+            // handleSubmit={handleSubmit}
+            handleSubmit={handleSubmit}
+            handleBack={handleBack}
+            currentStep={currentStep}
+            isFinalStep={isFinalStep}
+          ></BottomBar>
+        </>
+      )}
     </>
   );
 }

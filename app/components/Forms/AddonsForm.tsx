@@ -1,6 +1,6 @@
 "use client";
 
-import { Formik, Form, useField, useFormikContext } from "formik";
+import { useField, useFormikContext } from "formik";
 import Image from "next/image";
 
 type InputProps = {

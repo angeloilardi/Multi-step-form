@@ -62,17 +62,19 @@ export default function PlanSelectionForm() {
         <label
           className={`border-1 ${
             !isSelected ? `border-light-gray` : `border-purplish-blue`
-          } rounded-md p-4 flex items-center text-marine-blue font-[500]`}
+          } rounded-md p-4 flex items-center lg:items-start text-marine-blue font-[500] lg:flex-col w-full grow`}
         >
-          <Image src={icon} alt="" className="mr-4" width={40} height={40} />
-          <input type="radio" {...field} {...props} hidden className="" />
-          <div className="flex flex-col">
-            {label}
-            <span className="text-light-gray">
-              ${price}
-              {!toggle ? `/mo` : `/yr`}
-            </span>
-            {toggle && <span className="font-normal">2 months free</span>}
+          <Image src={icon} alt="" className="mr-4 lg:mb-12" width={40} height={40} />
+          <div className="lg:flex lg:flex-col">
+            <input type="radio" {...field} {...props} hidden className="" />
+            <div className="flex flex-col">
+              {label}
+              <span className="text-light-gray">
+                ${price}
+                {!toggle ? `/mo` : `/yr`}
+              </span>
+              {toggle && <span className="font-normal">2 months free</span>}
+            </div>
           </div>
         </label>
       </>
@@ -83,7 +85,7 @@ export default function PlanSelectionForm() {
     <>
             <fieldset>
               <legend className="sr-only">Select a plan</legend>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 lg:flex-row">
                 {options.map(({ label, value, icon, monthly, yearly }) => {
                   return (
                     <RadioInput
