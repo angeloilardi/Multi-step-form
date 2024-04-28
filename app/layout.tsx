@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-magnolia ${ubuntu.className} bg-[url('/images/bg-sidebar-mobile.svg')] lg:bg-none lg:bg-magnolia bg-contain bg-no-repeat bg-top min-h-screen flex flex-col lg:justify-center`}
+        className={`bg-magnolia ${ubuntu.className} bg-[url('/images/bg-sidebar-mobile.svg')] lg:bg-none lg:bg-magnolia bg-contain bg-no-repeat bg-top min-h-dvh flex flex-col lg:justify-center`}
       >
         <Providers>{children}</Providers>
       </body>

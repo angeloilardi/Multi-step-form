@@ -133,7 +133,7 @@ export default function SignupForm() {
               email: Yup.string()
                 .required("This field is required")
                 .email("Invalid email addresss"),
-              phone: Yup.string().required("This field is required"),
+              phone: Yup.string().required("This field is required").matches(phoneRegEx, 'Phone number is not valid'),
               plan: Yup.string(),
               toggle: Yup.boolean(),
               checked: Yup.array(),
