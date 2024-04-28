@@ -1,18 +1,16 @@
-import { useRef, useState } from "react";
+
+import { MutableRefObject, Ref, RefObject, useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Card from "./Card";
 import Recap from "./Recap";
-import { Form, Formik, useFormikContext } from "formik";
+import { Form, Formik, FormikProps, useFormikContext } from "formik";
 import * as Yup from "yup";
 import PersonalForm from "./Forms/PersonalForm";
 import BottomBar from "./BottomBar";
 import PlanSelectionForm from "./Forms/PlanSelectionForm";
 import AddonsForm from "./Forms/AddonsForm";
 import plans from "./../utils/data";
-import OrderSuccess from "./OrderSuccess";
-// import {
-//   useWindowWidth
-// } from "@react-hook/window-size";
+
 
 const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
@@ -45,7 +43,21 @@ const steps = [
   },
 ];
 
+
+
 export default function SignupForm() {
+  type FormValues = {
+    name: string;
+          email: string;
+          phone: string;
+          plan: string;
+          toggle: boolean;
+          checked: string[];
+  };
+  const formRef = useRef<FormikProps<FormValues>>(null);
+
+
+
   function renderForm(step: number) {
     switch (step) {
       case 0:
@@ -63,24 +75,38 @@ export default function SignupForm() {
 
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
+    console.log('back');
   };
 
   const handleChangePlan = () => {
     setCurrentStep(1);
   };
 
-  const handleSubmit = (values, actions) => {
-    if (isFinalStep) {
-      setCurrentStep(currentStep + 1);
-      console.log("what is going on");
-      console.log(values);
-    } else setCurrentStep(currentStep + 1);
-  };
+
 
   const [currentStep, setCurrentStep] = useState(0);
   const isFinalStep = currentStep === steps.length - 2;
   const orderSuccess = currentStep === steps.length -1;
-  const formik = useRef(null);
+
+
+
+  const hansdleSubmit = () => {
+    if (formRef.current) {
+ if (isFinalStep) {
+   setCurrentStep(currentStep + 1);
+   console.log("what is going on");
+ } else if (Object.keys(formRef.current.touched).length === 0) {
+   console.log("empty");
+   formRef.current.handleSubmit();
+   return;
+ } else if (formRef.current.isValid) {
+   setCurrentStep(currentStep + 1);
+ }
+    }
+     
+  }
+    
+  
 
   return (
     <>
@@ -93,52 +119,61 @@ export default function SignupForm() {
           orderSuccess={orderSuccess}
         >
           <Formik
-            innerRef={formik}
+            innerRef={formRef}
             initialValues={{
               name: "",
               email: "",
-              phoneNumber: "",
+              phone: "",
               plan: "arcade",
               toggle: false,
               checked: [],
             }}
-            // validationSchema={Yup.object({
-            //   name: Yup.string().required("This field is required"),
-            //   email: Yup.string()
-            //     .email("Invalid email addresss")
-            //     .required("This field is required"),
-            //   phoneNumber: Yup.string()
-            //     .required("This field is required"),
-            //   plan: Yup.string(),
-            //   toggle: Yup.boolean(),
-            //   checked: Yup.array(),
-            // })}
+            validationSchema={Yup.object({
+              name: Yup.string().required("This field is required"),
+              email: Yup.string()
+                .required("This field is required")
+                .email("Invalid email addresss"),
+              phone: Yup.string().required("This field is required"),
+              plan: Yup.string(),
+              toggle: Yup.boolean(),
+              checked: Yup.array(),
+            })}
             // onSubmit={async (values) => {
             //   await new Promise((r) => setTimeout(r, 500));
             //   alert(JSON.stringify(values, null, 2));
+
             // }}
-            onSubmit={handleSubmit}
+            onSubmit={hansdleSubmit}
           >
             {({ values, handleChange, isSubmitting }) => (
-              <Form className="flex flex-col">
+              <Form className={`flex flex-col ${!orderSuccess && `h-full`}`}>
                 {renderForm(currentStep)}
-                {/* <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-6 h-4 bg-zinc-50 p-6"
-                  >
-                    sub
-                  </button> */}
+                {!orderSuccess && (
+                  <div className="w-full lg:flex items-center justify-between mt-auto bg-white py-4 hidden">
+                    {currentStep > 0 && (
+                      <button type="button" onClick={handleBack}>
+                        Go back
+                      </button>
+                    )}
+
+                    <button
+                      type="submit"
+                      className="bg-marine-blue inline-block text-white rounded-md p-3 ml-auto"
+                    >
+                      {isFinalStep ? "Confirm" : `Next Step`}
+                    </button>
+                  </div>
+                )}
               </Form>
             )}
           </Formik>
         </Card>
         <BottomBar
-          // handleSubmit={handleSubmit}
-          handleSubmit={handleSubmit}
+          handleSubmit={hansdleSubmit}
           handleBack={handleBack}
           currentStep={currentStep}
           isFinalStep={isFinalStep}
+          orderSuccess={orderSuccess}
         ></BottomBar>
       </>
     </>

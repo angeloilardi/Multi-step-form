@@ -130,7 +130,7 @@ export default function PlanSelectionForm() {
                     "w-4 h-4 shadow-lg ml-0.5",
 
                     //selected
-                    "group-data-[selected=true]:ml-5"
+                    "group-data-[selected=true]:ml-[22px]"
                     // pressed
                     // "group-data-[pressed=true]:w-5"
                   ),

@@ -51,7 +51,7 @@ export default function Recap({
             {`$${planPrice}/${isYearly ? "yr" : "mo"}`}
           </p>
         </div>
-        {checked.map((value:any) => {
+        {checked.map((value: any) => {
           return (
             <>
               <hr className="my-4" />
@@ -72,7 +72,9 @@ export default function Recap({
           isYearly ? "year" : "month"
         })`}</p>
         <p className="text-purplish-blue font-[500] text-xl">{`+$${
-          planPrice + addonsPrice.reduce((a, b) => a + b)
+          addonsPrice.length
+            ? planPrice + addonsPrice.reduce((a, b) => a + b)
+            : planPrice
         }/${isYearly ? "yr" : "mo"}`}</p>
       </div>
     </>
