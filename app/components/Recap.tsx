@@ -41,7 +41,7 @@ export default function Recap({
               {plan} {isYearly ? `(Yearly)` : `(Monthly)`}
             </p>
             <button
-              className="underline text-cool-gray"
+              className="underline text-cool-gray hover:text-purplish-blue"
               onClick={handleChangePlan}
             >
               Change

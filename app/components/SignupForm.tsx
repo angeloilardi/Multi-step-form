@@ -133,7 +133,9 @@ export default function SignupForm() {
               email: Yup.string()
                 .required("This field is required")
                 .email("Invalid email addresss"),
-              phone: Yup.string().required("This field is required").matches(phoneRegEx, 'Phone number is not valid'),
+              phone: Yup.string()
+                .required("This field is required")
+                .matches(phoneRegEx, "Phone number is not valid"),
               plan: Yup.string(),
               toggle: Yup.boolean(),
               checked: Yup.array(),
@@ -146,14 +148,17 @@ export default function SignupForm() {
                 {!orderSuccess && (
                   <div className="w-full lg:flex items-center justify-between mt-auto bg-white py-4 hidden">
                     {currentStep > 0 && (
-                      <button type="button" onClick={handleBack}>
+                      <button
+                        onClick={handleBack}
+                        className="text-cool-gray font-[500] hover:text-marine-blue"
+                      >
                         Go back
                       </button>
                     )}
 
                     <button
                       type="submit"
-                      className="bg-marine-blue inline-block text-white rounded-md p-3 ml-auto"
+                      className="bg-marine-blue inline-block text-white rounded-md p-3 ml-auto hover:bg-purplish-blue"
                     >
                       {isFinalStep ? "Confirm" : `Next Step`}
                     </button>

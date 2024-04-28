@@ -46,9 +46,14 @@ const CheckboxInput = ({
       <label
         className={`border-1 ${
           isChecked ? `border-purplish-blue bg-alabaster` : `border-light-gray`
-        } rounded-md p-4 flex items-center text-marine-blue font-[500]`}
+        } rounded-md p-4 flex items-center text-marine-blue font-[500] hover:border-purplish-blue`}
       >
-        <input type="checkbox" {...field} {...props} className="w-4 h-4 mr-4 lg:mr-5" />
+        <input
+          type="checkbox"
+          {...field}
+          {...props}
+          className="w-4 h-4 mr-4 lg:mr-5"
+        />
         <div className="flex flex-col">
           {label}
           <span className="text-light-gray font-normal">{description}</span>
@@ -67,25 +72,39 @@ type FormValues = {
 
 export default function AddonsForm() {
   const { values } = useFormikContext<FormValues>();
-  const {checked}:{checked:string[]} = values
+  const { checked }: { checked: string[] } = values;
   return (
     <>
-            <div className="flex flex-col gap-3">
-              {options.map(({ label, value, description, monthly, yearly }:{label:string, value: string, description:string, monthly: number, yearly: number }) => {
-                return (
-                  <CheckboxInput
-                    label={label}
-                    value={value}
-                    name="checked"
-                    key={value}
-                    description={description}
-                    isChecked={checked.includes(value)}
-                    price={values.toggle ? `${yearly}/yr` : `${monthly}/mo`}
-                    checked={checked.includes(value)?true:false}
-                  />
-                );
-              })}
-            </div>
+      <div className="flex flex-col gap-3">
+        {options.map(
+          ({
+            label,
+            value,
+            description,
+            monthly,
+            yearly,
+          }: {
+            label: string;
+            value: string;
+            description: string;
+            monthly: number;
+            yearly: number;
+          }) => {
+            return (
+              <CheckboxInput
+                label={label}
+                value={value}
+                name="checked"
+                key={value}
+                description={description}
+                isChecked={checked.includes(value)}
+                price={values.toggle ? `${yearly}/yr` : `${monthly}/mo`}
+                checked={checked.includes(value) ? true : false}
+              />
+            );
+          }
+        )}
+      </div>
     </>
   );
 }
