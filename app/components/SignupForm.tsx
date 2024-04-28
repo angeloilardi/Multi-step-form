@@ -1,16 +1,14 @@
-
 import { useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Card from "./Card";
 import Recap from "./Recap";
-import { Form, Formik, FormikProps, useFormikContext } from "formik";
+import { Form, Formik, FormikProps } from "formik";
 import * as Yup from "yup";
 import PersonalForm from "./Forms/PersonalForm";
 import BottomBar from "./BottomBar";
 import PlanSelectionForm from "./Forms/PlanSelectionForm";
 import AddonsForm from "./Forms/AddonsForm";
 import plans from "./../utils/data";
-
 
 const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
@@ -43,21 +41,18 @@ const steps = [
   },
 ];
 
-
-
 export default function SignupForm() {
   type FormValues = {
     name: string;
-          email: string;
-          phone: string;
-          plan: string;
-          toggle: boolean;
-          checked: string[];
+    email: string;
+    phone: string;
+    plan: string;
+    toggle: boolean;
+    checked: string[];
   };
   const formRef = useRef<FormikProps<FormValues>>(null);
 
-
-
+  // renders the form content for each step
   function renderForm(step: number) {
     switch (step) {
       case 0:
@@ -73,40 +68,41 @@ export default function SignupForm() {
     }
   }
 
+  // function for the go back button
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
-    console.log('back');
+    console.log("back");
   };
 
+  // functon for the change plan button
   const handleChangePlan = () => {
     setCurrentStep(1);
   };
 
-
-
+  // state to track the current step
   const [currentStep, setCurrentStep] = useState(0);
+
+  // checks if it's the final step
   const isFinalStep = currentStep === steps.length - 2;
-  const orderSuccess = currentStep === steps.length -1;
 
+  // checks if it's the order success page
+  const orderSuccess = currentStep === steps.length - 1;
 
-
+  // function for the form submission
   const hansdleSubmit = () => {
     if (formRef.current) {
- if (isFinalStep) {
-   setCurrentStep(currentStep + 1);
-   console.log("what is going on");
- } else if (Object.keys(formRef.current.touched).length === 0) {
-   console.log("empty");
-   formRef.current.handleSubmit();
-   return;
- } else if (formRef.current.isValid) {
-   setCurrentStep(currentStep + 1);
- }
+      if (isFinalStep) {
+        setCurrentStep(currentStep + 1);
+      } else if (Object.keys(formRef.current.touched).length === 0) {
+        console.log("empty");
+        formRef.current.handleSubmit();
+        return;
+      } else if (formRef.current.isValid) {
+        setCurrentStep(currentStep + 1);
+        console.log(currentStep);
+      }
     }
-     
-  }
-    
-  
+  };
 
   return (
     <>
@@ -158,7 +154,9 @@ export default function SignupForm() {
 
                     <button
                       type="submit"
-                      className="bg-marine-blue inline-block text-white rounded-md p-3 ml-auto hover:bg-purplish-blue"
+                      className={`bg-marine-blue inline-block text-white rounded-md p-3 ml-auto hover:opacity-80 ${
+                        isFinalStep && `hover:bg-purplish-blue`
+                      }`}
                     >
                       {isFinalStep ? "Confirm" : `Next Step`}
                     </button>

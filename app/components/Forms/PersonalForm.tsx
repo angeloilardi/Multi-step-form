@@ -18,13 +18,15 @@ const TextInput = ({ label, ...props }: InputProps) => {
           {label}
         </label>
         {meta.touched && meta.error ? (
-          <div className="error text-sm text-red-500 font-bold ml-auto">{meta.error}</div>
+          <div className="error text-sm text-red-500 font-bold ml-auto">
+            {meta.error}
+          </div>
         ) : null}
       </div>
       <input
-        className={`rounded-md text-blue-500 border p-3 placeholder:font-500 ${
+        className={`rounded-md text-marine-blue border p-3 font-[500] ${
           meta.touched && meta.error ? `border-red-500` : ``
-        }`}
+        } hover:border-purplish-blue`}
         {...field}
         {...props}
       />

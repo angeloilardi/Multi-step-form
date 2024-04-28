@@ -24,7 +24,7 @@ const { currentStep, handleBack, isFinalStep, handleSubmit, orderSuccess } =
 
           <button
             type="submit"
-            className="bg-marine-blue inline-block text-white rounded-md p-3 ml-auto hover:bg-purplish-blue"
+            className="bg-marine-blue inline-block text-white rounded-md p-3 ml-auto hover:opacity-80"
             onClick={handleSubmit}
           >
             {isFinalStep ? "Confirm" : `Next Step`}
