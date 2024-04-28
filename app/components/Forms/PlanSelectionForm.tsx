@@ -1,5 +1,3 @@
-"use client";
-
 import { useField, useFormikContext, } from "formik";
 import { useState } from "react";
 import { Switch } from "@nextui-org/switch";

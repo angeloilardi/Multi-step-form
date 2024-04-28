@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import "./globals.css";
-import Image from "next/image";
-import Footer from "./components/Footer";
 import { Providers } from "./providers";
-import BottomBar from "./components/BottomBar";
 
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["400", "500", "700"] });
 

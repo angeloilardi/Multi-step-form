@@ -1,5 +1,5 @@
 
-import { MutableRefObject, Ref, RefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import TopBar from "./TopBar";
 import Card from "./Card";
 import Recap from "./Recap";
@@ -138,11 +138,6 @@ export default function SignupForm() {
               toggle: Yup.boolean(),
               checked: Yup.array(),
             })}
-            // onSubmit={async (values) => {
-            //   await new Promise((r) => setTimeout(r, 500));
-            //   alert(JSON.stringify(values, null, 2));
-
-            // }}
             onSubmit={hansdleSubmit}
           >
             {({ values, handleChange, isSubmitting }) => (

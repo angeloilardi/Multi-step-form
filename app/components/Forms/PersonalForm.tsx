@@ -1,7 +1,5 @@
 import { useField } from "formik";
 
-
-
 type InputProps = {
   label: string;
   name: string;
@@ -34,7 +32,6 @@ const TextInput = ({ label, ...props }:InputProps) => {
 export default function PersonalForm() {
     return (
       <>
-
             <TextInput
               label="Name"
               type="text"

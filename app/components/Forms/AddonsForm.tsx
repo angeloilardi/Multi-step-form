@@ -1,7 +1,6 @@
 "use client";
 
 import { useField, useFormikContext } from "formik";
-import Image from "next/image";
 
 type InputProps = {
   label: string;
