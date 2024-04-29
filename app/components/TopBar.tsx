@@ -35,7 +35,7 @@ export default function TopBar(props: {currentStep:number}) {
                 return (
                   <><div
                         key={step.order}
-                        className={`rounded-full w-8 h-8 border-2 text-center ${props.currentStep === step.order-1
+                        className={`rounded-full w-8 h-8 border-2 align-middle ${props.currentStep === step.order-1
                                 ? `text-marine-blue bg-light-blue border-light-blue font-bold`
                                 : `text-white border-white`}`}
                     >
