@@ -45,7 +45,7 @@ export default function Sidebar(props: { currentStep: number }) {
                 </div>
                 <div className="flex flex-col">
                   <p className="text-sm text-light-gray">STEP {step.order}</p>
-                  <p className="text-white uppercase">{step.title}</p>
+                  <p className="text-white uppercase font-bold">{step.title}</p>
                 </div>
               </div>
             </div>

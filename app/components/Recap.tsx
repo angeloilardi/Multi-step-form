@@ -4,27 +4,22 @@ import data from "./../utils/data";
 import { MouseEventHandler } from "react";
 
 type FormValues = {
-    plan: string,
-    toggle: boolean,
-    checked: []
-}
+  plan: string;
+  toggle: boolean;
+  checked: [];
+};
 
-const {plans, addons} = data
-
-
+const { plans, addons } = data;
 
 export default function Recap({
   handleChangePlan,
 }: {
   handleChangePlan: MouseEventHandler<HTMLButtonElement>;
-    })
-{
-    const { values } = useFormikContext<FormValues>();
-    const { plan, toggle, checked } = values;
+}) {
+  const { values } = useFormikContext<FormValues>();
+  const { plan, toggle, checked } = values;
   const isYearly = toggle;
-  const planPrice:number = isYearly
-    ? plans[plan].yearly
-    : plans[plan].monthly;
+  const planPrice: number = isYearly ? plans[plan].yearly : plans[plan].monthly;
 
   const addonsPrice = checked.map((value) => {
     {

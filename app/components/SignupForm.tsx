@@ -145,6 +145,7 @@ export default function SignupForm() {
                   <div className="w-full lg:flex items-center justify-between mt-auto bg-white py-4 hidden">
                     {currentStep > 0 && (
                       <button
+                        type="button"
                         onClick={handleBack}
                         className="text-cool-gray font-[500] hover:text-marine-blue"
                       >
